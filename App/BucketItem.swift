@@ -10,7 +10,7 @@ import SwiftData
 final class BucketItem {
     var urlString: String?
     var imageData: Data?
-    var createdAt: Date
+    var createdAt: Date = Date()
     var bucket: Bucket?
 
     var url: URL? {

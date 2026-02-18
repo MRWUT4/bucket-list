@@ -16,7 +16,7 @@ struct BucketListView: View {
     @State private var newName = ""
 
     var sortedItems: [BucketItem] {
-        bucket.items.sorted { $0.createdAt > $1.createdAt }
+        (bucket.items ?? []).sorted { $0.createdAt > $1.createdAt }
     }
 
     var body: some View {

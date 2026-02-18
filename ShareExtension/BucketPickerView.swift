@@ -25,7 +25,7 @@ struct BucketPickerView: View {
                         VStack(alignment: .leading) {
                             Text(bucket.name)
                                 .font(.headline)
-                            Text("\(bucket.items.count) items")
+                            Text("\((bucket.items ?? []).count) items")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }

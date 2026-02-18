@@ -24,7 +24,7 @@ struct InboxListView: View {
                             VStack(alignment: .leading) {
                                 Text(bucket.name)
                                     .font(.headline)
-                                Text("\(bucket.items.count) links")
+                                Text("\((bucket.items ?? []).count) links")
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                             }
