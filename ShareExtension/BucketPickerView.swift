@@ -11,22 +11,31 @@ struct BucketPickerView: View {
     let onDismiss: () -> Void
 
     @State private var buckets: [Bucket] = []
+    @State private var showingNewBucket = false
+    @State private var newBucketName = ""
     private let container = SharedModelContainer.container
 
     var body: some View {
         NavigationStack {
-            List(buckets) { bucket in
-                Button {
-                    addItem(to: bucket)
-                } label: {
-                    VStack(alignment: .leading) {
-                        Text(bucket.name)
-                            .font(.headline)
-                        Text("\(bucket.items.count) items")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+            ZStack(alignment: .bottomTrailing) {
+                List(buckets) { bucket in
+                    Button {
+                        addItem(to: bucket)
+                    } label: {
+                        VStack(alignment: .leading) {
+                            Text(bucket.name)
+                                .font(.headline)
+                            Text("\(bucket.items.count) items")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
                     }
                 }
+
+                FloatingActionButton {
+                    showingNewBucket = true
+                }
+                .padding()
             }
             .navigationTitle("Save to Bucket")
             .navigationBarTitleDisplayMode(.inline)
@@ -34,6 +43,14 @@ struct BucketPickerView: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { onDismiss() }
                 }
+            }
+            .alert("New Bucket", isPresented: $showingNewBucket) {
+                TextField("Name", text: $newBucketName)
+                Button("Cancel", role: .cancel) { newBucketName = "" }
+                Button("Add") {
+                    createBucketAndAddItem()
+                }
+                .disabled(newBucketName.isEmpty)
             }
         }
         .onAppear { loadBuckets() }
@@ -59,5 +76,14 @@ struct BucketPickerView: View {
         context.insert(item)
         try? context.save()
         onDismiss()
+    }
+
+    @MainActor
+    private func createBucketAndAddItem() {
+        let context = container.mainContext
+        let bucket = Bucket(name: newBucketName)
+        context.insert(bucket)
+        newBucketName = ""
+        addItem(to: bucket)
     }
 }

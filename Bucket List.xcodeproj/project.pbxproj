@@ -45,6 +45,7 @@
 			membershipExceptions = (
 				Bucket.swift,
 				BucketItem.swift,
+				FloatingActionButton.swift,
 				SharedModelContainer.swift,
 			);
 			target = AABB00042F44C00000000004 /* ShareExtension */;
