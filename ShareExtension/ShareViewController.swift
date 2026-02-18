@@ -18,13 +18,13 @@ class ShareViewController: UIViewController {
             return
         }
 
-        if provider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
-            provider.loadItem(forTypeIdentifier: UTType.image.identifier, options: nil) { [weak self] data, _ in
-                self?.handleImageItem(data)
-            }
-        } else if provider.hasItemConformingToTypeIdentifier(UTType.url.identifier) {
+        if provider.hasItemConformingToTypeIdentifier(UTType.url.identifier) {
             provider.loadItem(forTypeIdentifier: UTType.url.identifier, options: nil) { [weak self] data, _ in
                 self?.handleURLItem(data)
+            }
+        } else if provider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
+            provider.loadItem(forTypeIdentifier: UTType.image.identifier, options: nil) { [weak self] data, _ in
+                self?.handleImageItem(data)
             }
         } else if provider.hasItemConformingToTypeIdentifier(UTType.plainText.identifier) {
             provider.loadItem(forTypeIdentifier: UTType.plainText.identifier, options: nil) { [weak self] data, _ in

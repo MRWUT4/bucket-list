@@ -35,4 +35,15 @@ enum SharedModelContainer {
             }
         }
     }()
+
+    /// Container without CloudKit, for use in app extensions
+    static let extensionContainer: ModelContainer = {
+        let schema = Schema([Bucket.self, BucketItem.self])
+        do {
+            let config = ModelConfiguration("BucketList", url: storeURL)
+            return try ModelContainer(for: schema, configurations: [config])
+        } catch {
+            fatalError("Failed to create extension ModelContainer: \(error)")
+        }
+    }()
 }

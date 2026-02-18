@@ -13,7 +13,7 @@ struct BucketPickerView: View {
     @State private var buckets: [Bucket] = []
     @State private var showingNewBucket = false
     @State private var newBucketName = ""
-    private let container = SharedModelContainer.container
+    private let container = SharedModelContainer.extensionContainer
 
     var body: some View {
         NavigationStack {
