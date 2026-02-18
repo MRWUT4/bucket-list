@@ -18,20 +18,24 @@ class ShareViewController: UIViewController {
             return
         }
 
-        if provider.hasItemConformingToTypeIdentifier(UTType.url.identifier) {
+        if provider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
+            provider.loadItem(forTypeIdentifier: UTType.image.identifier, options: nil) { [weak self] data, _ in
+                self?.handleImageItem(data)
+            }
+        } else if provider.hasItemConformingToTypeIdentifier(UTType.url.identifier) {
             provider.loadItem(forTypeIdentifier: UTType.url.identifier, options: nil) { [weak self] data, _ in
-                self?.handleLoadedItem(data)
+                self?.handleURLItem(data)
             }
         } else if provider.hasItemConformingToTypeIdentifier(UTType.plainText.identifier) {
             provider.loadItem(forTypeIdentifier: UTType.plainText.identifier, options: nil) { [weak self] data, _ in
-                self?.handleLoadedItem(data)
+                self?.handleURLItem(data)
             }
         } else {
             close()
         }
     }
 
-    private func handleLoadedItem(_ data: (any Sendable)?) {
+    private func handleURLItem(_ data: (any Sendable)?) {
         var url: URL?
         if let directURL = data as? URL {
             url = directURL
@@ -46,12 +50,32 @@ class ShareViewController: UIViewController {
                 self.close()
                 return
             }
-            self.showBucketPicker(for: url)
+            self.showBucketPicker(sharedContent: .url(url))
         }
     }
 
-    private func showBucketPicker(for url: URL) {
-        let picker = BucketPickerView(url: url) { [weak self] in
+    private func handleImageItem(_ data: (any Sendable)?) {
+        var imageData: Data?
+
+        if let url = data as? URL {
+            imageData = try? Data(contentsOf: url)
+        } else if let data = data as? Data {
+            imageData = data
+        } else if let image = data as? UIImage {
+            imageData = image.jpegData(compressionQuality: 0.8)
+        }
+
+        DispatchQueue.main.async {
+            guard let imageData else {
+                self.close()
+                return
+            }
+            self.showBucketPicker(sharedContent: .image(imageData))
+        }
+    }
+
+    private func showBucketPicker(sharedContent: SharedContent) {
+        let picker = BucketPickerView(content: sharedContent) { [weak self] in
             self?.close()
         }
 

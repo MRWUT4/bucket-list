@@ -8,16 +8,30 @@ import SwiftData
 
 @Model
 final class BucketItem {
-    var urlString: String
+    var urlString: String?
+    var imageData: Data?
     var createdAt: Date
     var bucket: Bucket?
 
     var url: URL? {
-        URL(string: urlString)
+        guard let urlString else { return nil }
+        return URL(string: urlString)
+    }
+
+    var isImage: Bool {
+        imageData != nil
     }
 
     init(urlString: String, bucket: Bucket) {
         self.urlString = urlString
+        self.imageData = nil
+        self.createdAt = Date()
+        self.bucket = bucket
+    }
+
+    init(imageData: Data, bucket: Bucket) {
+        self.urlString = nil
+        self.imageData = imageData
         self.createdAt = Date()
         self.bucket = bucket
     }

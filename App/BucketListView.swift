@@ -5,6 +5,7 @@
 
 import SwiftData
 import SwiftUI
+import UIKit
 
 struct BucketListView: View {
     @Environment(\.modelContext) private var modelContext
@@ -22,7 +23,14 @@ struct BucketListView: View {
         ZStack(alignment: .bottomTrailing) {
             List {
                 ForEach(sortedItems) { item in
-                    if let url = item.url {
+                    if item.isImage, let imageData = item.imageData,
+                       let uiImage = UIImage(data: imageData) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxHeight: 300)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    } else if let url = item.url {
                         LinkPreviewView(url: url)
                             .frame(minHeight: 120)
                     }

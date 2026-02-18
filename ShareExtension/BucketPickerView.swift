@@ -7,7 +7,7 @@ import SwiftData
 import SwiftUI
 
 struct BucketPickerView: View {
-    let url: URL
+    let content: SharedContent
     let onDismiss: () -> Void
 
     @State private var buckets: [Bucket] = []
@@ -17,12 +17,12 @@ struct BucketPickerView: View {
         NavigationStack {
             List(buckets) { bucket in
                 Button {
-                    addURL(to: bucket)
+                    addItem(to: bucket)
                 } label: {
                     VStack(alignment: .leading) {
                         Text(bucket.name)
                             .font(.headline)
-                        Text("\(bucket.items.count) links")
+                        Text("\(bucket.items.count) items")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -47,9 +47,15 @@ struct BucketPickerView: View {
     }
 
     @MainActor
-    private func addURL(to bucket: Bucket) {
+    private func addItem(to bucket: Bucket) {
         let context = container.mainContext
-        let item = BucketItem(urlString: url.absoluteString, bucket: bucket)
+        let item: BucketItem
+        switch content {
+        case .url(let url):
+            item = BucketItem(urlString: url.absoluteString, bucket: bucket)
+        case .image(let data):
+            item = BucketItem(imageData: data, bucket: bucket)
+        }
         context.insert(item)
         try? context.save()
         onDismiss()

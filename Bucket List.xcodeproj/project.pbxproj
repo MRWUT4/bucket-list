@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AABB00142F44C00000000020 /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AABB00012F44C00000000001 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AABB00142F44C00000000020 /* ShareExtension.appex in CopyFiles */ = {isa = PBXBuildFile; fileRef = AABB00012F44C00000000001 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -21,13 +21,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		AABB000E2F44C00000000014 /* Embed Foundation Extensions */ = {
+		AABB000E2F44C00000000014 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				AABB00142F44C00000000020 /* ShareExtension.appex in Embed Foundation Extensions */,
+				AABB00142F44C00000000020 /* ShareExtension.appex in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,7 +114,7 @@
 				1E74FE732F44BF5700CB3BAF /* Sources */,
 				1E74FE742F44BF5700CB3BAF /* Frameworks */,
 				1E74FE752F44BF5700CB3BAF /* Resources */,
-				AABB000E2F44C00000000014 /* Embed Foundation Extensions */,
+				AABB000E2F44C00000000014 /* CopyFiles */,
 			);
 			buildRules = (
 			);
