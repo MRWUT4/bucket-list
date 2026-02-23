@@ -7,6 +7,25 @@ import SwiftData
 import SwiftUI
 import UIKit
 
+enum BucketSortOrder: String, CaseIterable {
+    case chronological
+    case alphabetical
+    
+    var iconName: String {
+        switch self {
+        case .chronological: return "clock"
+        case .alphabetical: return "textformat"
+        }
+    }
+    
+    var label: String {
+        switch self {
+        case .chronological: return "Chronological"
+        case .alphabetical: return "Alphabetical"
+        }
+    }
+}
+
 struct BucketListView: View {
     @Environment(\.modelContext) private var modelContext
     let bucket: Bucket
@@ -16,9 +35,25 @@ struct BucketListView: View {
     @State private var newName = ""
     @State private var selectedImageData: Data?
     @State private var shareItem: BucketItem?
+    @AppStorage("bucketSortOrder") private var sortOrder: BucketSortOrder = .chronological
 
     var sortedItems: [BucketItem] {
-        (bucket.items ?? []).sorted { $0.createdAt > $1.createdAt }
+        let items = bucket.items ?? []
+        switch sortOrder {
+        case .chronological:
+            return items.sorted { $0.createdAt > $1.createdAt }
+        case .alphabetical:
+            return items.sorted { itemTitle($0) < itemTitle($1) }
+        }
+    }
+    
+    private func itemTitle(_ item: BucketItem) -> String {
+        if item.isImage {
+            return "Image"
+        } else if let urlString = item.urlString {
+            return urlString.lowercased()
+        }
+        return ""
     }
 
     var body: some View {
@@ -63,6 +98,23 @@ struct BucketListView: View {
         }
         .navigationTitle(bucket.name)
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Menu {
+                    ForEach(BucketSortOrder.allCases, id: \.self) { order in
+                        Button {
+                            sortOrder = order
+                        } label: {
+                            Label(order.label, systemImage: order.iconName)
+                            if sortOrder == order {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                    }
+                } label: {
+                    Image(systemName: sortOrder.iconName)
+                }
+            }
+            
             ToolbarItem(placement: .primaryAction) {
                 Menu {
                     Button {
