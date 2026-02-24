@@ -14,12 +14,22 @@ struct InboxListView: View {
 
     @State private var showingAddBucket = false
     @State private var newBucketName = ""
+    @AppStorage("inboxSortOrder") private var sortOrder: BucketSortOrder = .chronological
+
+    var sortedBuckets: [Bucket] {
+        switch sortOrder {
+        case .chronological:
+            return buckets.sorted { $0.createdAt > $1.createdAt }
+        case .alphabetical:
+            return buckets.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+        }
+    }
 
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottomTrailing) {
                 List {
-                    ForEach(buckets) { bucket in
+                    ForEach(sortedBuckets) { bucket in
                         NavigationLink(value: bucket) {
                             VStack(alignment: .leading) {
                                 Text(bucket.name)
@@ -33,6 +43,24 @@ struct InboxListView: View {
                     .onDelete(perform: deleteBuckets)
                 }
                 .navigationTitle("Buckets")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Menu {
+                            ForEach(BucketSortOrder.allCases, id: \.self) { order in
+                                Button {
+                                    sortOrder = order
+                                } label: {
+                                    Label(order.label, systemImage: order.iconName)
+                                    if sortOrder == order {
+                                        Image(systemName: "checkmark")
+                                    }
+                                }
+                            }
+                        } label: {
+                            Image(systemName: sortOrder.iconName)
+                        }
+                    }
+                }
                 .navigationDestination(for: Bucket.self) { bucket in
                     BucketListView(bucket: bucket)
                 }
@@ -57,7 +85,7 @@ struct InboxListView: View {
 
     private func deleteBuckets(at offsets: IndexSet) {
         for index in offsets {
-            modelContext.delete(buckets[index])
+            modelContext.delete(sortedBuckets[index])
         }
     }
 }
