@@ -5,6 +5,7 @@
 //  Created by Ochmann, David on 17.02.26.
 //
 
+import CloudKit
 import SwiftData
 import SwiftUI
 
@@ -61,6 +62,9 @@ struct InboxListView: View {
                         }
                     }
                 }
+                .refreshable {
+                    await triggerCloudKitSync()
+                }
                 .navigationDestination(for: Bucket.self) { bucket in
                     BucketListView(bucket: bucket)
                 }
@@ -86,6 +90,17 @@ struct InboxListView: View {
     private func deleteBuckets(at offsets: IndexSet) {
         for index in offsets {
             modelContext.delete(sortedBuckets[index])
+        }
+    }
+
+    private func triggerCloudKitSync() async {
+        try? modelContext.save()
+
+        let container = CKContainer(identifier: SharedModelContainer.cloudKitContainerIdentifier)
+        do {
+            _ = try await container.privateCloudDatabase.allRecordZones()
+        } catch {
+            // CloudKit sync will eventually happen on its own
         }
     }
 }
