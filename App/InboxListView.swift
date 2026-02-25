@@ -15,6 +15,7 @@ struct InboxListView: View {
 
     @State private var showingAddBucket = false
     @State private var newBucketName = ""
+    @State private var selectedBucket: Bucket?
     @AppStorage("inboxSortOrder") private var sortOrder: BucketSortOrder = .chronological
 
     var sortedBuckets: [Bucket] {
@@ -27,9 +28,9 @@ struct InboxListView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationSplitView {
             ZStack(alignment: .bottomTrailing) {
-                List {
+                List(selection: $selectedBucket) {
                     ForEach(sortedBuckets) { bucket in
                         NavigationLink(value: bucket) {
                             VStack(alignment: .leading) {
@@ -65,9 +66,6 @@ struct InboxListView: View {
                 .refreshable {
                     await triggerCloudKitSync()
                 }
-                .navigationDestination(for: Bucket.self) { bucket in
-                    BucketListView(bucket: bucket)
-                }
 
                 FloatingActionButton {
                     showingAddBucket = true
@@ -83,6 +81,12 @@ struct InboxListView: View {
                     newBucketName = ""
                 }
                 .disabled(newBucketName.isEmpty)
+            }
+        } detail: {
+            if let selectedBucket {
+                BucketListView(bucket: selectedBucket)
+            } else {
+                ContentUnavailableView("Select a Bucket", systemImage: "folder", description: Text("Choose a bucket from the sidebar"))
             }
         }
     }

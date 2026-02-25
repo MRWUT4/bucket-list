@@ -72,8 +72,15 @@ struct BucketListView: View {
                                     selectedImageData = imageData
                                 }
                         } else if let url = item.url {
-                            LinkPreviewView(url: url)
-                                .frame(minHeight: 120)
+                            VStack(alignment: .leading, spacing: 4) {
+                                LinkPreviewView(url: url)
+                                    .frame(minHeight: 120)
+                                Text(url.absoluteString)
+                                    .font(.footnote)
+                                    .foregroundStyle(.secondary)
+                                    .lineLimit(1)
+                                    .truncationMode(.middle)
+                            }
                         }
                     }
                     .swipeActions(edge: .leading) {

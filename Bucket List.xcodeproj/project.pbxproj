@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1EE3ED422F4DE64200805CA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EE3ED382F4DE64200805CA5 /* Assets.xcassets */; };
+		1EE3F37B2F4DEA1C00805CA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EE3ED382F4DE64200805CA5 /* Assets.xcassets */; };
 		6372AF042F4CA38600C69F9F /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 6372AF032F4CA38600C69F9F /* AppIcon.icon */; };
-		6372AF052F4CA38600C69F9F /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 6372AF032F4CA38600C69F9F /* AppIcon.icon */; };
 		AABB00142F44C00000000020 /* ShareExtension.appex in CopyFiles */ = {isa = PBXBuildFile; fileRef = AABB00012F44C00000000001 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		1E74FE772F44BF5700CB3BAF /* Bucket List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bucket List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E74FF1E2F45A04900CB3BAF /* Bucket List.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bucket List.entitlements"; sourceTree = "<group>"; };
+		1EE3ED382F4DE64200805CA5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6372AF032F4CA38600C69F9F /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		AABB00012F44C00000000001 /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -46,7 +48,6 @@
 		AABB00122F44C00000000018 /* Exceptions for "App" folder in "ShareExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Assets.xcassets,
 				Bucket.swift,
 				BucketItem.swift,
 				FloatingActionButton.swift,
@@ -93,8 +94,9 @@
 		1E74FE6E2F44BF5700CB3BAF = {
 			isa = PBXGroup;
 			children = (
-				6372AF032F4CA38600C69F9F /* AppIcon.icon */,
 				1E74FF1E2F45A04900CB3BAF /* Bucket List.entitlements */,
+				6372AF032F4CA38600C69F9F /* AppIcon.icon */,
+				1EE3ED382F4DE64200805CA5 /* Assets.xcassets */,
 				1E74FE792F44BF5700CB3BAF /* App */,
 				AABB00022F44C00000000002 /* ShareExtension */,
 				1E74FE782F44BF5700CB3BAF /* Products */,
@@ -202,6 +204,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EE3ED422F4DE64200805CA5 /* Assets.xcassets in Resources */,
 				6372AF042F4CA38600C69F9F /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -210,7 +213,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6372AF052F4CA38600C69F9F /* AppIcon.icon in Resources */,
+				1EE3F37B2F4DEA1C00805CA5 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,7 +396,9 @@
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -439,7 +444,9 @@
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -457,7 +464,6 @@
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = AppIcon.icon;
 				DEVELOPMENT_TEAM = 862EP3FZQX;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = ShareExtensionInfo.plist;
@@ -489,7 +495,6 @@
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = AppIcon.icon;
 				DEVELOPMENT_TEAM = 862EP3FZQX;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = ShareExtensionInfo.plist;
