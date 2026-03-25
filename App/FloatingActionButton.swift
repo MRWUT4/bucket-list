@@ -6,11 +6,12 @@
 import SwiftUI
 
 struct FloatingActionButton: View {
+    var systemImage: String = "plus"
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
-            Image(systemName: "plus")
+            Image(systemName: systemImage)
                 .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundStyle(.white)

@@ -17,8 +17,6 @@
   },
   "groups" : [
     {
-      "blend-mode" : "normal",
-      "blur-material" : 0.5,
       "hidden" : false,
       "layers" : [
         {
@@ -80,6 +78,95 @@
               }
             }
           ],
+          "glass" : true,
+          "hidden" : false,
+          "image-name" : "bucket-icon.svg",
+          "name" : "bucket-icon",
+          "position" : {
+            "scale" : 0.5,
+            "translation-in-points" : [
+              0,
+              -19.518035000000054
+            ]
+          }
+        }
+      ],
+      "opacity" : 0.6,
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    },
+    {
+      "blend-mode" : "normal",
+      "blur-material" : 1,
+      "hidden" : false,
+      "layers" : [
+        {
+          "fill-specializations" : [
+            {
+              "value" : {
+                "linear-gradient" : [
+                  "display-p3:0.00000,0.00000,0.00000,1.00000",
+                  "display-p3:0.00000,0.00000,0.00000,1.00000"
+                ],
+                "orientation" : {
+                  "start" : {
+                    "x" : 0.5,
+                    "y" : 0
+                  },
+                  "stop" : {
+                    "x" : 0.5,
+                    "y" : 0.7
+                  }
+                }
+              }
+            },
+            {
+              "appearance" : "dark",
+              "value" : {
+                "linear-gradient" : [
+                  "display-p3:0.99854,0.87646,0.25854,1.00000",
+                  "display-p3:0.97656,0.77100,0.20935,1.00000"
+                ],
+                "orientation" : {
+                  "start" : {
+                    "x" : 0.5,
+                    "y" : 0
+                  },
+                  "stop" : {
+                    "x" : 0.5,
+                    "y" : 0.7
+                  }
+                }
+              }
+            },
+            {
+              "appearance" : "tinted",
+              "value" : {
+                "linear-gradient" : [
+                  "display-p3:1.00000,1.00000,1.00000,1.00000",
+                  "display-p3:0.83270,0.83270,0.83270,1.00000"
+                ],
+                "orientation" : {
+                  "start" : {
+                    "x" : 0.5,
+                    "y" : 0
+                  },
+                  "stop" : {
+                    "x" : 0.5,
+                    "y" : 0.7
+                  }
+                }
+              }
+            }
+          ],
+          "glass" : true,
+          "hidden" : false,
           "image-name" : "bucket-icon.svg",
           "name" : "bucket-icon",
           "position" : {
@@ -92,13 +179,14 @@
         }
       ],
       "lighting" : "individual",
+      "opacity" : 1,
       "shadow" : {
         "kind" : "neutral",
         "opacity" : 0.5
       },
       "specular-specializations" : [
         {
-          "value" : true
+          "value" : false
         },
         {
           "appearance" : "tinted",
@@ -109,7 +197,7 @@
         {
           "value" : {
             "enabled" : true,
-            "value" : 0.2
+            "value" : 0.05
           }
         },
         {

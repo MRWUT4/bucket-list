@@ -29,7 +29,6 @@ struct InboxListView: View {
 
     var body: some View {
         NavigationSplitView {
-            ZStack(alignment: .bottomTrailing) {
                 List(selection: $selectedBucket) {
                     ForEach(sortedBuckets) { bucket in
                         NavigationLink(value: bucket) {
@@ -62,16 +61,19 @@ struct InboxListView: View {
                             Image(systemName: sortOrder.iconName)
                         }
                     }
+
+                    ToolbarItem(placement: .primaryAction) {
+                        Button {
+                            showingAddBucket = true
+                        } label: {
+                            Image(systemName: "plus")
+                                .foregroundStyle(.accent)
+                        }
+                    }
                 }
                 .refreshable {
                     await triggerCloudKitSync()
                 }
-
-                FloatingActionButton {
-                    showingAddBucket = true
-                }
-                .padding()
-            }
             .alert("New Bucket", isPresented: $showingAddBucket) {
                 TextField("Name", text: $newBucketName)
                 Button("Cancel", role: .cancel) { newBucketName = "" }

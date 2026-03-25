@@ -57,52 +57,45 @@ struct BucketListView: View {
     }
 
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
-            List {
-                ForEach(sortedItems) { item in
-                    Group {
-                        if item.isImage, let imageData = item.imageData,
-                           let uiImage = UIImage(data: imageData) {
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(maxHeight: 300)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                                .onTapGesture {
-                                    selectedImageData = imageData
-                                }
-                        } else if let url = item.url {
-                            VStack(alignment: .leading, spacing: 4) {
-                                LinkPreviewView(url: url)
-                                    .frame(minHeight: 120)
-                                Text(url.absoluteString)
-                                    .font(.footnote)
-                                    .foregroundStyle(.secondary)
-                                    .lineLimit(1)
-                                    .truncationMode(.middle)
+        List {
+            ForEach(sortedItems) { item in
+                Group {
+                    if item.isImage, let imageData = item.imageData,
+                       let uiImage = UIImage(data: imageData) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxHeight: 300)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .onTapGesture {
+                                selectedImageData = imageData
                             }
+                    } else if let url = item.url {
+                        VStack(alignment: .leading, spacing: 4) {
+                            LinkPreviewView(url: url)
+                                .frame(minHeight: 120)
+                            Text(url.absoluteString)
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                                .lineLimit(1)
+                                .truncationMode(.middle)
                         }
-                    }
-                    .swipeActions(edge: .leading) {
-                        Button {
-                            shareItem = item
-                        } label: {
-                            Label("Share", systemImage: "square.and.arrow.up")
-                        }
-                        .tint(.blue)
                     }
                 }
-                .onDelete(perform: deleteItems)
-                .listRowSeparator(.hidden)
+                .swipeActions(edge: .leading) {
+                    Button {
+                        shareItem = item
+                    } label: {
+                        Label("Share", systemImage: "square.and.arrow.up")
+                    }
+                    .tint(.blue)
+                }
+            }
+            .onDelete(perform: deleteItems)
+            .listRowSeparator(.hidden)
 //                .listRowInsets(EdgeInsets())
-            }
-            .listStyle(.plain)
-
-            FloatingActionButton {
-                showingAddURL = true
-            }
-            .padding()
         }
+        .listStyle(.plain)
         .navigationTitle(bucket.name)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -121,7 +114,16 @@ struct BucketListView: View {
                     Image(systemName: sortOrder.iconName)
                 }
             }
-            
+
+//            ToolbarItem(placement: .primaryAction) {
+//                Button {
+//                    showingAddURL = true
+//                } label: {
+//                    Image(systemName: "plus")
+//                        .foregroundStyle(.accent)
+//                }
+//            }
+
             ToolbarItem(placement: .primaryAction) {
                 Menu {
                     Button {
@@ -131,7 +133,7 @@ struct BucketListView: View {
                         Label("Rename", systemImage: "pencil")
                     }
                 } label: {
-                    Image(systemName: "ellipsis.circle")
+                    Image(systemName: "ellipsis")
                 }
             }
         }
