@@ -3,6 +3,7 @@
 //  bucket-list
 //
 
+import SwiftData
 import SwiftUI
 import UIKit
 
@@ -23,3 +24,10 @@ struct ActivityView: UIViewControllerRepresentable {
 
     func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
+
+#if DEBUG
+#Preview {
+    ActivityView(item: PreviewSampleData.sampleBucketItem)
+        .modelContainer(PreviewSampleData.container)
+}
+#endif

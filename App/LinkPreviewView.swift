@@ -57,3 +57,9 @@ struct LinkPreviewView: UIViewRepresentable {
     }
 }
 #endif
+
+#Preview {
+    LinkPreviewView(url: URL(string: "https://apple.com")!)
+        .frame(height: 200)
+        .padding()
+}

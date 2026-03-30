@@ -48,9 +48,13 @@
 		AABB00122F44C00000000018 /* Exceptions for "App" folder in "ShareExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				ActivityView.swift,
+				AddURLSheet.swift,
 				Bucket.swift,
 				BucketItem.swift,
 				FloatingActionButton.swift,
+				FullScreenImageView.swift,
+				LinkPreviewView.swift,
 				SharedModelContainer.swift,
 			);
 			target = AABB00042F44C00000000004 /* ShareExtension */;
@@ -69,6 +73,11 @@
 		AABB00022F44C00000000002 /* ShareExtension */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ShareExtension;
+			sourceTree = "<group>";
+		};
+		AABB00152F44C00000000021 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -98,6 +107,7 @@
 				6372AF032F4CA38600C69F9F /* AppIcon.icon */,
 				1EE3ED382F4DE64200805CA5 /* Assets.xcassets */,
 				1E74FE792F44BF5700CB3BAF /* App */,
+				AABB00152F44C00000000021 /* Shared */,
 				AABB00022F44C00000000002 /* ShareExtension */,
 				1E74FE782F44BF5700CB3BAF /* Products */,
 			);
@@ -131,6 +141,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				1E74FE792F44BF5700CB3BAF /* App */,
+				AABB00152F44C00000000021 /* Shared */,
 			);
 			name = "Bucket List";
 			packageProductDependencies = (
@@ -153,6 +164,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				AABB00022F44C00000000002 /* ShareExtension */,
+				AABB00152F44C00000000021 /* Shared */,
 			);
 			name = ShareExtension;
 			packageProductDependencies = (

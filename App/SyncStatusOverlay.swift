@@ -23,3 +23,11 @@ struct SyncStatusOverlay: View {
         }
     }
 }
+
+#Preview("Syncing") {
+    SyncStatusOverlay(isSyncing: true)
+}
+
+#Preview("Idle") {
+    SyncStatusOverlay(isSyncing: false)
+}

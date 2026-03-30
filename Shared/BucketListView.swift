@@ -175,3 +175,12 @@ struct BucketListView: View {
         }
     }
 }
+
+#if DEBUG
+#Preview {
+    NavigationStack {
+        BucketListView(bucket: PreviewSampleData.sampleBucket)
+    }
+    .modelContainer(PreviewSampleData.container)
+}
+#endif

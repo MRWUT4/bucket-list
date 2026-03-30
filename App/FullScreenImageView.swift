@@ -35,3 +35,9 @@ struct FullScreenImageView: View {
         }
     }
 }
+
+#if DEBUG
+#Preview {
+    FullScreenImageView(imageData: PreviewSampleData.sampleImageData)
+}
+#endif

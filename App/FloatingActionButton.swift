@@ -16,9 +16,19 @@ struct FloatingActionButton: View {
                 .fontWeight(.semibold)
                 .foregroundStyle(.white)
                 .frame(width: 56, height: 56)
-                .background(Circle().fill(Color.accentColor))
+//                .background(Circle().fill(Color.accentColor))
                 .shadow(radius: 4, y: 2)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.glassProminent)
+        .buttonBorderShape(.circle)
+        .tint(Color("AppColor"))
     }
+}
+
+#Preview {
+    FloatingActionButton { }
+}
+
+#Preview("Custom Icon") {
+    FloatingActionButton(systemImage: "sparkles") { }
 }

@@ -24,9 +24,6 @@ struct BucketPickerView: View {
     let content: SharedContent
     let onDismiss: () -> Void
 
-    @State private var buckets: [Bucket] = []
-    @State private var showingNewBucket = false
-    @State private var newBucketName = ""
     @State private var isAutoSorting = false
     @State private var autoSortMessage = ""
     @State private var showAutoSortResult = false
@@ -35,20 +32,10 @@ struct BucketPickerView: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottomTrailing) {
-                List(buckets) { bucket in
-                    Button {
-                        saveItem(to: bucket)
-                        onDismiss()
-                    } label: {
-                        VStack(alignment: .leading) {
-                            Text(bucket.name)
-                                .font(.headline)
-                            Text("\((bucket.items ?? []).count) items")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                }
+                InboxListView(onBucketTapped: { bucket in
+                    saveItem(to: bucket)
+                    onDismiss()
+                })
 
                 FloatingActionButton(systemImage: "sparkles") {
                     autoSortItem()
@@ -56,29 +43,11 @@ struct BucketPickerView: View {
                 .disabled(isAutoSorting)
                 .padding()
             }
-            .navigationTitle("Save to Bucket")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { onDismiss() }
                 }
-
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        showingNewBucket = true
-                    } label: {
-                        Image(systemName: "plus")
-                            .foregroundStyle(.accent)
-                    }
-                }
-            }
-            .alert("New Bucket", isPresented: $showingNewBucket) {
-                TextField("Name", text: $newBucketName)
-                Button("Cancel", role: .cancel) { newBucketName = "" }
-                Button("Add") {
-                    createBucketAndSaveItem()
-                }
-                .disabled(newBucketName.isEmpty)
             }
             .alert("Auto-Sorted", isPresented: $showAutoSortResult) {
                 Button("OK") { onDismiss() }
@@ -97,17 +66,10 @@ struct BucketPickerView: View {
                 }
             }
         }
-        .onAppear { loadBuckets() }
+        .modelContainer(container)
     }
 
     // MARK: - Data Operations
-
-    @MainActor
-    private func loadBuckets() {
-        let context = container.mainContext
-        let descriptor = FetchDescriptor<Bucket>(sortBy: [SortDescriptor(\.createdAt, order: .reverse)])
-        buckets = (try? context.fetch(descriptor)) ?? []
-    }
 
     @MainActor
     private func saveItem(to bucket: Bucket) {
@@ -123,16 +85,6 @@ struct BucketPickerView: View {
         try? context.save()
     }
 
-    @MainActor
-    private func createBucketAndSaveItem() {
-        let context = container.mainContext
-        let bucket = Bucket(name: newBucketName)
-        context.insert(bucket)
-        newBucketName = ""
-        saveItem(to: bucket)
-        onDismiss()
-    }
-
     // MARK: - Auto-Sort
 
     private func autoSortItem() {
@@ -142,6 +94,12 @@ struct BucketPickerView: View {
         case .image:
             autoSortImage()
         }
+    }
+
+    private func fetchBuckets() -> [Bucket] {
+        let context = container.mainContext
+        let descriptor = FetchDescriptor<Bucket>(sortBy: [SortDescriptor(\.createdAt, order: .reverse)])
+        return (try? context.fetch(descriptor)) ?? []
     }
 
     private func autoSortURL(_ url: URL) {
@@ -166,13 +124,14 @@ struct BucketPickerView: View {
     }
 
     private func smartSort(url: URL, metadata: LPLinkMetadata?) async throws {
+        let buckets = fetchBuckets()
         let instructions = """
-            You are a smart organizer that categorizes web links into topic buckets. \
-            Prefer existing buckets when the content is related. \
-            Only suggest a new bucket if no existing one fits well.
+            You are a smart organizer that categorizes web links into topic buckets.
+            Suggest a new bucket if no existing one fits well.
+            New buckets should follow the pattern: "Domain / Category". 
             """
         let session = LanguageModelSession(instructions: instructions)
-        let prompt = buildSortPrompt(url: url, metadata: metadata)
+        let prompt = buildSortPrompt(url: url, metadata: metadata, buckets: buckets)
         let response = try await session.respond(to: prompt, generating: BucketSuggestion.self)
         let suggestion = response.content
 
@@ -188,7 +147,7 @@ struct BucketPickerView: View {
         autoSortMessage = suggestion.explanation
     }
 
-    private func buildSortPrompt(url: URL, metadata: LPLinkMetadata?) -> String {
+    private func buildSortPrompt(url: URL, metadata: LPLinkMetadata?, buckets: [Bucket]) -> String {
         let domain = url.host ?? url.absoluteString
         let title = metadata?.title ?? "Unknown"
 
@@ -222,10 +181,11 @@ struct BucketPickerView: View {
     // MARK: - Fallbacks
 
     private func domainMatchFallback(url: URL, metadata: LPLinkMetadata?) {
+        let buckets = fetchBuckets()
         let domain = url.host ?? url.absoluteString
         let siteTitle = metadata?.title
 
-        if let matchingBucket = findBestMatchingBucket(for: url) {
+        if let matchingBucket = findBestMatchingBucket(for: url, in: buckets) {
             saveItem(to: matchingBucket)
             autoSortMessage = "Saved to \"\(matchingBucket.name)\" — this link matches other items from \(domain)."
         } else {
@@ -239,6 +199,7 @@ struct BucketPickerView: View {
     }
 
     private func autoSortImage() {
+        let buckets = fetchBuckets()
         if let bucket = buckets.first(where: { ($0.items ?? []).contains { $0.isImage } }) {
             saveItem(to: bucket)
             autoSortMessage = "Saved image to \"\(bucket.name)\" — this bucket already contains images."
@@ -252,7 +213,7 @@ struct BucketPickerView: View {
         showAutoSortResult = true
     }
 
-    private func findBestMatchingBucket(for url: URL) -> Bucket? {
+    private func findBestMatchingBucket(for url: URL, in buckets: [Bucket]) -> Bucket? {
         guard let domain = url.host else { return nil }
         var bestBucket: Bucket?
         var bestCount = 0
@@ -268,3 +229,12 @@ struct BucketPickerView: View {
         return bestBucket
     }
 }
+
+#if DEBUG
+#Preview {
+    BucketPickerView(
+        content: .url(URL(string: "https://apple.com")!)
+    ) { }
+    .modelContainer(PreviewSampleData.container)
+}
+#endif

@@ -40,3 +40,7 @@ struct AddURLSheet: View {
         }
     }
 }
+
+#Preview {
+    AddURLSheet { _ in }
+}
