@@ -12,6 +12,10 @@ import SwiftUI
 struct BucketListApp: App {
     @State private var syncMonitor = SyncMonitor()
 
+    init() {
+        MinimalDesign.configureNavigationBar()
+    }
+
     var body: some Scene {
         WindowGroup {
             InboxListView()

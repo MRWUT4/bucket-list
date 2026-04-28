@@ -7,17 +7,31 @@ import SwiftData
 import SwiftUI
 import UIKit
 
+enum BucketFilter: String, CaseIterable {
+    case all
+    case links
+    case images
+
+    var label: String {
+        switch self {
+        case .all: return "All"
+        case .links: return "Links"
+        case .images: return "Images"
+        }
+    }
+}
+
 enum BucketSortOrder: String, CaseIterable {
     case chronological
     case alphabetical
-    
+
     var iconName: String {
         switch self {
         case .chronological: return "clock"
         case .alphabetical: return "textformat"
         }
     }
-    
+
     var label: String {
         switch self {
         case .chronological: return "Chronological"
@@ -28,25 +42,34 @@ enum BucketSortOrder: String, CaseIterable {
 
 struct BucketListView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.openURL) private var openURL
     let bucket: Bucket
 
     @State private var showingAddURL = false
     @State private var showingRename = false
+    @State private var showingCustomize = false
     @State private var newName = ""
     @State private var selectedImageData: Data?
     @State private var shareItem: BucketItem?
     @AppStorage("bucketSortOrder") private var sortOrder: BucketSortOrder = .chronological
+    @State private var filter: BucketFilter = .all
 
     var sortedItems: [BucketItem] {
         let items = bucket.items ?? []
+        let filtered: [BucketItem]
+        switch filter {
+        case .all:    filtered = items
+        case .links:  filtered = items.filter { !$0.isImage }
+        case .images: filtered = items.filter { $0.isImage }
+        }
         switch sortOrder {
         case .chronological:
-            return items.sorted { $0.createdAt > $1.createdAt }
+            return filtered.sorted { $0.createdAt > $1.createdAt }
         case .alphabetical:
-            return items.sorted { itemTitle($0) < itemTitle($1) }
+            return filtered.sorted { itemTitle($0) < itemTitle($1) }
         }
     }
-    
+
     private func itemTitle(_ item: BucketItem) -> String {
         if item.isImage {
             return "Image"
@@ -56,32 +79,33 @@ struct BucketListView: View {
         return ""
     }
 
+    private var heroMeta: String {
+        let n = sortedItems.count
+        switch filter {
+        case .all:    return "\(n) \(n == 1 ? "item" : "items")"
+        case .links:  return "\(n) \(n == 1 ? "link" : "links")"
+        case .images: return "\(n) \(n == 1 ? "image" : "images")"
+        }
+    }
+
     var body: some View {
         List {
+            heroRow
+
             ForEach(sortedItems) { item in
                 Group {
-                    if item.isImage, let imageData = item.imageData,
-                       let uiImage = UIImage(data: imageData) {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxHeight: 300)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                            .onTapGesture {
-                                selectedImageData = imageData
-                            }
+                    if item.isImage, let imageData = item.imageData {
+                        MinimalImageRow(imageData: imageData, savedAt: item.createdAt)
+                            .onTapGesture { selectedImageData = imageData }
                     } else if let url = item.url {
-                        VStack(alignment: .leading, spacing: 4) {
-                            LinkPreviewView(url: url)
-                                .frame(minHeight: 120)
-                            Text(url.absoluteString)
-                                .font(.footnote)
-                                .foregroundStyle(.secondary)
-                                .lineLimit(1)
-                                .truncationMode(.middle)
-                        }
+                        MinimalLinkRow(url: url, savedAt: item.createdAt)
+                            .onTapGesture { openURL(url) }
                     }
                 }
+                .padding(.bottom)
+                .listRowBackground(MinimalDesign.warmBg)
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets())
                 .swipeActions(edge: .leading) {
                     Button {
                         shareItem = item
@@ -92,11 +116,15 @@ struct BucketListView: View {
                 }
             }
             .onDelete(perform: deleteItems)
-            .listRowSeparator(.hidden)
-//                .listRowInsets(EdgeInsets())
         }
         .listStyle(.plain)
+        .scrollContentBackground(.hidden)
+        .background(MinimalDesign.warmBg)
         .navigationTitle(bucket.name)
+        .onChange(of: hasMixedContent) {
+            if !hasMixedContent { filter = .all }
+        }
+//        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Menu {
@@ -115,15 +143,6 @@ struct BucketListView: View {
                 }
             }
 
-//            ToolbarItem(placement: .primaryAction) {
-//                Button {
-//                    showingAddURL = true
-//                } label: {
-//                    Image(systemName: "plus")
-//                        .foregroundStyle(.accent)
-//                }
-//            }
-
             ToolbarItem(placement: .primaryAction) {
                 Menu {
                     Button {
@@ -131,6 +150,11 @@ struct BucketListView: View {
                         showingRename = true
                     } label: {
                         Label("Rename", systemImage: "pencil")
+                    }
+                    Button {
+                        showingCustomize = true
+                    } label: {
+                        Label("Customize", systemImage: "paintpalette")
                     }
                 } label: {
                     Image(systemName: "ellipsis")
@@ -144,6 +168,9 @@ struct BucketListView: View {
                 bucket.name = newName
             }
             .disabled(newName.isEmpty)
+        }
+        .sheet(isPresented: $showingCustomize) {
+            BucketCustomizeSheet(bucket: bucket)
         }
         .sheet(isPresented: $showingAddURL) {
             AddURLSheet { urlString in
@@ -167,6 +194,74 @@ struct BucketListView: View {
                 ActivityView(item: item)
             }
         }
+    }
+
+    private var hasMixedContent: Bool {
+        let items = bucket.items ?? []
+        let hasLinks = items.contains { !$0.isImage }
+        let hasImages = items.contains { $0.isImage }
+        return hasLinks && hasImages
+    }
+
+    private var heroRow: some View {
+        let tint = MinimalDesign.resolvedTint(for: bucket.name, customIndex: bucket.customColorIndex)
+        let symbol = MinimalDesign.resolvedSymbol(for: bucket.name, customIndex: bucket.customSymbolIndex)
+
+        return VStack(alignment: .leading, spacing: 10) {
+//            HStack(spacing: 10) {
+//                Image(systemName: symbol)
+//                    .font(.system(size: 20, weight: .regular))
+//                    .foregroundStyle(tint)
+            Text(heroMeta)
+                .kickerStyle(symbol: symbol, tint: tint)
+//                .border(.red)
+//            }
+//            .edgeInsets(for: .)
+//            Text("\(bucket.name).")
+//                .displayTitle(size: 40)
+//                .foregroundStyle(.primary)
+//                .lineLimit(2)
+//                .multilineTextAlignment(.leading)
+
+            if hasMixedContent {
+                HStack(spacing: 18) {
+                    ForEach(BucketFilter.allCases, id: \.self) { tab in
+                        filterTab(tab.label, active: filter == tab)
+                            .onTapGesture { withAnimation(.easeInOut(duration: 0.2)) { filter = tab } }
+                    }
+                    Spacer()
+                }
+//                .border(.red)
+                .padding(.top, 14)
+            }
+
+//            Rectangle()
+//                .fill(Color.secondary.opacity(0.25))
+//                .frame(height: 0.5)
+//                .padding(.top, 4)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, MinimalDesign.horizontalMargin)
+//        .padding(.top, 16)
+        .padding(.bottom, 8)
+        .listRowBackground(MinimalDesign.warmBg)
+        .listRowSeparator(.hidden)
+        .listRowInsets(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing: 0))
+        .selectionDisabled()
+    }
+
+    private func filterTab(_ label: String, active: Bool) -> some View {
+        VStack(spacing: 6) {
+            Text(label)
+                .font(.system(size: 14, weight: active ? .semibold : .regular))
+                .tracking(-0.15)
+                .foregroundStyle(active ? Color.primary : Color.secondary)
+            Rectangle()
+                .fill(active ? Color.primary : Color.clear)
+                .frame(height: 1.5)
+                .frame(maxWidth: .infinity)
+        }
+        .fixedSize(horizontal: true, vertical: false)
     }
 
     private func deleteItems(at offsets: IndexSet) {

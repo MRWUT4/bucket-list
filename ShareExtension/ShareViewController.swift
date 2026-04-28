@@ -11,6 +11,7 @@ import UniformTypeIdentifiers
 class ShareViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        MinimalDesign.configureNavigationBar()
 
         guard let item = extensionContext?.inputItems.first as? NSExtensionItem,
               let provider = item.attachments?.first else {

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:api.anthropic.com)",
+      "Read(//private/tmp/design-fetch/bucket-list/**)",
+      "Bash(xcodebuild -project \"Bucket List.xcodeproj\" -scheme \"Bucket List\" -destination \"generic/platform=iOS Simulator\" -configuration Debug build)"
+    ]
+  }
+}

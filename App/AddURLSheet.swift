@@ -22,9 +22,9 @@ struct AddURLSheet: View {
                     .autocorrectionDisabled()
             }
             .navigationTitle("Add URL")
-            #if os(iOS)
-            .navigationBarTitleDisplayMode(.inline)
-            #endif
+//            #if os(iOS)
+//            .navigationBarTitleDisplayMode(.inline)
+//            #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { dismiss() }

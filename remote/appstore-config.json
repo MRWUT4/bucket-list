@@ -1,0 +1,258 @@
+{
+  "data" : [
+    {
+      "attributes" : {
+        "appInformation" : {
+          "name" : "Bucket List - Save Links",
+          "subtitle" : "Organize URLs for Later"
+        },
+        "copyright" : "David Ochmann",
+        "screenshots" : {
+          "APP_IPAD_PRO_3GEN_129" : [
+            ".\/Simulator Screenshot - iPad Pro 13-inch (M5) - 2026-04-15 at 08.53.38.png"
+          ],
+          "APP_IPHONE_65" : [
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.18.01.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 09.41.42.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.17.43.png"
+          ]
+        },
+        "version" : {
+          "description" : "Bucket List is your simple, beautiful way to save URLs for later. Whether it's an article you want to read, a video to watch, or a product to check out — just drop the link into a bucket and come back when you're ready.\n\nKey Features:\n\nORGANIZE WITH BUCKETS\nCreate custom buckets to group your saved links by topic, project, or mood. Keep everything tidy and easy to find.\n\nRICH LINK PREVIEWS\nEvery saved URL is displayed with a rich preview — title, image, and description — so you always know what you saved at a glance.\n\nSHARE EXTENSION\nSave links from any app. Use the iOS share sheet to quickly send URLs to your chosen bucket without leaving the app you're in.\n\nICLOUD SYNC\nYour buckets and links sync seamlessly across all your devices via iCloud. Save a link on your iPhone, find it on your Mac.\n\nCLEAN, MODERN DESIGN\nA focused interface built with SwiftUI that stays out of your way and lets you focus on what matters — your links.\n\nTerms of Use: https:\/\/www.apple.com\/legal\/internet-services\/itunes\/dev\/stdeula\/",
+          "keywords" : "bookmark,save,url,link,later,read,list,bucket,organize,collect,share,sync,preview,clip,web",
+          "whatsNew" : "Minor updates and improvements."
+        }
+      },
+      "locale" : "en-US"
+    },
+    {
+      "attributes" : {
+        "appInformation" : {
+          "name" : "Bucket List - 保存链接",
+          "subtitle" : "整理网址 稍后阅读"
+        },
+        "copyright" : "David Ochmann",
+        "screenshots" : {
+          "APP_IPAD_PRO_3GEN_129" : [
+            ".\/Simulator Screenshot - iPad Pro 13-inch (M5) - 2026-04-15 at 08.53.38.png"
+          ],
+          "APP_IPHONE_65" : [
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.18.01.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 09.41.42.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.17.43.png"
+          ]
+        },
+        "version" : {
+          "description" : "Bucket List 是您保存网址以备稍后查看的简洁美观方式。无论是想要阅读的文章、想要观看的视频，还是想要查看的产品——只需将链接放入一个桶中，准备好后再回来查看。\n\n主要功能：\n\n桶分类整理\n创建自定义桶，按主题、项目或心情对保存的链接进行分组。一切井井有条，轻松查找。\n\n丰富的链接预览\n每个保存的网址都会显示丰富的预览——标题、图片和描述——让您一目了然地知道保存了什么。\n\n分享扩展\n从任何应用程序保存链接。使用 iOS 共享功能，无需离开当前应用即可快速将网址发送到所选桶中。\n\niCloud 同步\n您的桶和链接通过 iCloud 在所有设备间无缝同步。在 iPhone 上保存链接，在 Mac 上找到它。\n\n简洁现代的设计\n采用 SwiftUI 构建的专注界面，不干扰您，让您专注于最重要的事——您的链接。\n\n使用条款：https:\/\/www.apple.com\/legal\/internet-services\/itunes\/dev\/stdeula\/",
+          "keywords" : "书签,保存,网址,链接,稍后,阅读,列表,桶,整理,收集,分享,同步,预览,剪辑,网页",
+          "whatsNew" : "一些小更新和改进。"
+        }
+      },
+      "locale" : "zh-Hans"
+    },
+    {
+      "attributes" : {
+        "appInformation" : {
+          "name" : "Bucket List - 儲存連結",
+          "subtitle" : "整理網址 稍後閱讀"
+        },
+        "copyright" : "David Ochmann",
+        "screenshots" : {
+          "APP_IPAD_PRO_3GEN_129" : [
+            ".\/Simulator Screenshot - iPad Pro 13-inch (M5) - 2026-04-15 at 08.53.38.png"
+          ],
+          "APP_IPHONE_65" : [
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.18.01.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 09.41.42.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.17.43.png"
+          ]
+        },
+        "version" : {
+          "description" : "Bucket List 是您儲存網址以備稍後查看的簡潔美觀方式。無論是想要閱讀的文章、想要觀看的影片，還是想要查看的產品——只需將連結放入一個桶中，準備好後再回來查看。\n\n主要功能：\n\n桶分類整理\n建立自訂桶，按主題、專案或心情對儲存的連結進行分組。一切井然有序，輕鬆查找。\n\n豐富的連結預覽\n每個儲存的網址都會顯示豐富的預覽——標題、圖片和描述——讓您一目了然地知道儲存了什麼。\n\n分享擴展\n從任何應用程式儲存連結。使用 iOS 共享功能，無需離開當前應用即可快速將網址發送到所選桶中。\n\niCloud 同步\n您的桶和連結透過 iCloud 在所有裝置間無縫同步。在 iPhone 上儲存連結，在 Mac 上找到它。\n\n簡潔現代的設計\n採用 SwiftUI 構建的專注介面，不干擾您，讓您專注於最重要的事——您的連結。\n\n使用條款：https:\/\/www.apple.com\/legal\/internet-services\/itunes\/dev\/stdeula\/",
+          "keywords" : "書籤,儲存,網址,連結,稍後,閱讀,列表,桶,整理,收集,分享,同步,預覽,剪輯,網頁",
+          "whatsNew" : "一些小更新和改進。"
+        }
+      },
+      "locale" : "zh-Hant"
+    },
+    {
+      "attributes" : {
+        "appInformation" : {
+          "name" : "Bucket List - Salvar Links",
+          "subtitle" : "Organize URLs para Depois"
+        },
+        "copyright" : "David Ochmann",
+        "screenshots" : {
+          "APP_IPAD_PRO_3GEN_129" : [
+            ".\/Simulator Screenshot - iPad Pro 13-inch (M5) - 2026-04-15 at 08.53.38.png"
+          ],
+          "APP_IPHONE_65" : [
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.18.01.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 09.41.42.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.17.43.png"
+          ]
+        },
+        "version" : {
+          "description" : "Bucket List é a sua maneira simples e bonita de salvar URLs para mais tarde. Seja um artigo que você quer ler, um vídeo para assistir ou um produto para conferir — basta colocar o link em um balde e voltar quando estiver pronto.\n\nPrincipais Funcionalidades:\n\nORGANIZE COM BALDES\nCrie baldes personalizados para agrupar seus links salvos por tema, projeto ou humor. Mantenha tudo organizado e fácil de encontrar.\n\nPRÉVIAS RICAS DE LINKS\nCada URL salva é exibida com uma prévia rica — título, imagem e descrição — para que você sempre saiba o que salvou de relance.\n\nEXTENSÃO DE COMPARTILHAMENTO\nSalve links de qualquer aplicativo. Use a folha de compartilhamento do iOS para enviar URLs rapidamente ao balde escolhido sem sair do app em que está.\n\nSINCRONIZAÇÃO VIA iCLOUD\nSeus baldes e links sincronizam perfeitamente em todos os seus dispositivos via iCloud. Salve um link no iPhone, encontre-o no Mac.\n\nDESIGN LIMPO E MODERNO\nUma interface focada construída com SwiftUI que não atrapalha e permite que você se concentre no que importa — seus links.\n\nTermos de Uso: https:\/\/www.apple.com\/legal\/internet-services\/itunes\/dev\/stdeula\/",
+          "keywords" : "favorito,salvar,url,link,depois,ler,lista,balde,organizar,coletar,compartilhar,sync,preview,web",
+          "whatsNew" : "Pequenas atualizações e melhorias."
+        }
+      },
+      "locale" : "pt-BR"
+    },
+    {
+      "attributes" : {
+        "appInformation" : {
+          "name" : "Bucket List - Sauver des Liens",
+          "subtitle" : "Organisez vos URLs"
+        },
+        "copyright" : "David Ochmann",
+        "screenshots" : {
+          "APP_IPAD_PRO_3GEN_129" : [
+            ".\/Simulator Screenshot - iPad Pro 13-inch (M5) - 2026-04-15 at 08.53.38.png"
+          ],
+          "APP_IPHONE_65" : [
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.18.01.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 09.41.42.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.17.43.png"
+          ]
+        },
+        "version" : {
+          "description" : "Bucket List est votre moyen simple et élégant de sauvegarder des URLs pour plus tard. Qu'il s'agisse d'un article à lire, d'une vidéo à regarder ou d'un produit à découvrir — déposez simplement le lien dans un seau et revenez quand vous êtes prêt.\n\nFonctionnalités clés :\n\nORGANISEZ AVEC DES SEAUX\nCréez des seaux personnalisés pour regrouper vos liens sauvegardés par sujet, projet ou envie. Gardez tout bien rangé et facile à retrouver.\n\nAPERÇUS RICHES DES LIENS\nChaque URL sauvegardée s'affiche avec un aperçu riche — titre, image et description — pour que vous sachiez toujours ce que vous avez sauvegardé d'un coup d'œil.\n\nEXTENSION DE PARTAGE\nSauvegardez des liens depuis n'importe quelle app. Utilisez la feuille de partage iOS pour envoyer rapidement des URLs vers le seau de votre choix sans quitter l'app en cours.\n\nSYNCHRONISATION iCLOUD\nVos seaux et liens se synchronisent parfaitement sur tous vos appareils via iCloud. Sauvegardez un lien sur votre iPhone, retrouvez-le sur votre Mac.\n\nDESIGN ÉPURÉ ET MODERNE\nUne interface soignée construite avec SwiftUI qui reste discrète et vous laisse vous concentrer sur l'essentiel — vos liens.\n\nConditions d'utilisation : https:\/\/www.apple.com\/legal\/internet-services\/itunes\/dev\/stdeula\/",
+          "keywords" : "favori,sauver,url,lien,tard,lire,liste,seau,organiser,collecter,partager,sync,aperçu,web,marque",
+          "whatsNew" : "Mises à jour mineures et améliorations."
+        }
+      },
+      "locale" : "fr-FR"
+    },
+    {
+      "attributes" : {
+        "appInformation" : {
+          "name" : "Bucket List - Сохранить Ссылки",
+          "subtitle" : "Организуйте URL на Потом"
+        },
+        "copyright" : "David Ochmann",
+        "screenshots" : {
+          "APP_IPAD_PRO_3GEN_129" : [
+            ".\/Simulator Screenshot - iPad Pro 13-inch (M5) - 2026-04-15 at 08.53.38.png"
+          ],
+          "APP_IPHONE_65" : [
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.18.01.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 09.41.42.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.17.43.png"
+          ]
+        },
+        "version" : {
+          "description" : "Bucket List — это ваш простой и красивый способ сохранять URL-адреса на потом. Будь то статья, которую вы хотите прочитать, видео для просмотра или товар для изучения — просто добавьте ссылку в корзину и вернитесь, когда будете готовы.\n\nОсновные функции:\n\nОРГАНИЗУЙТЕ С ПОМОЩЬЮ КОРЗИН\nСоздавайте пользовательские корзины для группировки сохранённых ссылок по теме, проекту или настроению. Держите всё в порядке и легко находите нужное.\n\nБОГАТЫЕ ПРЕВЬЮ ССЫЛОК\nКаждый сохранённый URL отображается с богатым превью — заголовок, изображение и описание — чтобы вы всегда знали, что сохранили, с первого взгляда.\n\nРАСШИРЕНИЕ ДЛЯ ОБМЕНА\nСохраняйте ссылки из любого приложения. Используйте лист обмена iOS, чтобы быстро отправить URL в выбранную корзину, не покидая текущее приложение.\n\nСИНХРОНИЗАЦИЯ ЧЕРЕЗ iCLOUD\nВаши корзины и ссылки безупречно синхронизируются на всех ваших устройствах через iCloud. Сохраните ссылку на iPhone — найдите её на Mac.\n\nЧИСТЫЙ, СОВРЕМЕННЫЙ ДИЗАЙН\nСфокусированный интерфейс, созданный с помощью SwiftUI, который не мешает и позволяет сосредоточиться на главном — ваших ссылках.\n\nУсловия использования: https:\/\/www.apple.com\/legal\/internet-services\/itunes\/dev\/stdeula\/",
+          "keywords" : "закладка,сохранить,ссылка,потом,читать,список,корзина,организовать,собрать,делиться,синхр,превью",
+          "whatsNew" : "Небольшие обновления и улучшения."
+        }
+      },
+      "locale" : "ru"
+    },
+    {
+      "attributes" : {
+        "appInformation" : {
+          "name" : "Bucket List - Links Speichern",
+          "subtitle" : "URLs für Später Organisieren"
+        },
+        "copyright" : "David Ochmann",
+        "screenshots" : {
+          "APP_IPAD_PRO_3GEN_129" : [
+            ".\/Simulator Screenshot - iPad Pro 13-inch (M5) - 2026-04-15 at 08.53.38.png"
+          ],
+          "APP_IPHONE_65" : [
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.18.01.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 09.41.42.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.17.43.png"
+          ]
+        },
+        "version" : {
+          "description" : "Bucket List ist Ihre einfache und elegante Möglichkeit, URLs für später zu speichern. Ob es ein Artikel zum Lesen, ein Video zum Anschauen oder ein Produkt zum Entdecken ist — legen Sie den Link einfach in einen Bucket und kommen Sie zurück, wenn Sie bereit sind.\n\nFeatures:\n\nMIT BUCKETS ORGANISIEREN\nErstellen Sie benutzerdefinierte Buckets, um Ihre gespeicherten Links nach Thema, Projekt oder Stimmung zu gruppieren. Halten Sie alles ordentlich und leicht auffindbar.\n\nREICHE LINK-VORSCHAUEN\nJede gespeicherte URL wird mit einer reichhaltigen Vorschau angezeigt — Titel, Bild und Beschreibung — damit Sie immer auf einen Blick wissen, was Sie gespeichert haben.\n\nTEILEN-ERWEITERUNG\nSpeichern Sie Links aus jeder App. Verwenden Sie das iOS-Teilen-Menü, um URLs schnell an den gewählten Bucket zu senden, ohne die aktuelle App zu verlassen.\n\niCLOUD-SYNCHRONISIERUNG\nIhre Buckets und Links synchronisieren sich nahtlos über alle Ihre Geräte via iCloud. Speichern Sie einen Link auf dem iPhone, finden Sie ihn auf dem Mac.\n\nKLARES, MODERNES DESIGN\nEine fokussierte Oberfläche, gebaut mit SwiftUI, die sich zurückhält und Sie auf das Wesentliche konzentrieren lässt — Ihre Links.\n\nNutzungsbedingungen: https:\/\/www.apple.com\/legal\/internet-services\/itunes\/dev\/stdeula\/",
+          "keywords" : "lesezeichen,speichern,url,link,später,lesen,liste,bucket,ordnen,sammeln,teilen,sync,vorschau,web",
+          "whatsNew" : "Kleine Updates und Verbesserungen."
+        }
+      },
+      "locale" : "de-DE"
+    },
+    {
+      "attributes" : {
+        "appInformation" : {
+          "name" : "Bucket List - Lưu Liên Kết",
+          "subtitle" : "Sắp Xếp URL Xem Sau"
+        },
+        "copyright" : "David Ochmann",
+        "screenshots" : {
+          "APP_IPAD_PRO_3GEN_129" : [
+            ".\/Simulator Screenshot - iPad Pro 13-inch (M5) - 2026-04-15 at 08.53.38.png"
+          ],
+          "APP_IPHONE_65" : [
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.18.01.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 09.41.42.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.17.43.png"
+          ]
+        },
+        "version" : {
+          "description" : "Bucket List là cách đơn giản và đẹp mắt để bạn lưu URL xem sau. Dù là một bài viết bạn muốn đọc, video muốn xem, hay sản phẩm muốn tìm hiểu — chỉ cần thả liên kết vào một xô và quay lại khi bạn sẵn sàng.\n\nTính năng chính:\n\nTỔ CHỨC VỚI CÁC XÔ\nTạo các xô tùy chỉnh để nhóm các liên kết đã lưu theo chủ đề, dự án hoặc tâm trạng. Giữ mọi thứ gọn gàng và dễ tìm.\n\nXEM TRƯỚC LIÊN KẾT PHONG PHÚ\nMỗi URL đã lưu được hiển thị với bản xem trước phong phú — tiêu đề, hình ảnh và mô tả — để bạn luôn biết mình đã lưu gì chỉ trong nháy mắt.\n\nTIỆN ÍCH CHIA SẺ\nLưu liên kết từ bất kỳ ứng dụng nào. Sử dụng tính năng chia sẻ iOS để nhanh chóng gửi URL đến xô đã chọn mà không cần rời khỏi ứng dụng hiện tại.\n\nĐỒNG BỘ iCLOUD\nCác xô và liên kết của bạn đồng bộ liền mạch trên tất cả thiết bị qua iCloud. Lưu liên kết trên iPhone, tìm thấy nó trên Mac.\n\nTHIẾT KẾ SẠCH, HIỆN ĐẠI\nGiao diện tập trung được xây dựng với SwiftUI, không làm phiền bạn và cho phép bạn tập trung vào điều quan trọng — liên kết của bạn.\n\nĐiều khoản sử dụng: https:\/\/www.apple.com\/legal\/internet-services\/itunes\/dev\/stdeula\/",
+          "keywords" : "đánh dấu,lưu,url,liên kết,sau,đọc,danh sách,xô,sắp xếp,thu thập,chia sẻ,đồng bộ,xem trước",
+          "whatsNew" : "Cập nhật và cải tiến nhỏ."
+        }
+      },
+      "locale" : "vi"
+    },
+    {
+      "attributes" : {
+        "appInformation" : {
+          "name" : "Bucket List - حفظ الروابط",
+          "subtitle" : "نظّم الروابط للاطلاع لاحقاً"
+        },
+        "copyright" : "David Ochmann",
+        "screenshots" : {
+          "APP_IPAD_PRO_3GEN_129" : [
+            ".\/Simulator Screenshot - iPad Pro 13-inch (M5) - 2026-04-15 at 08.53.38.png"
+          ],
+          "APP_IPHONE_65" : [
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.18.01.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 09.41.42.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.17.43.png"
+          ]
+        },
+        "version" : {
+          "description" : "Bucket List هو طريقتك البسيطة والجميلة لحفظ الروابط لوقت لاحق. سواء كان مقالاً تريد قراءته، أو فيديو لمشاهدته، أو منتجاً لتفقده — ما عليك سوى وضع الرابط في دلو والعودة عندما تكون مستعداً.\n\nالميزات الرئيسية:\n\nنظّم باستخدام الدلاء\nأنشئ دلاءً مخصصة لتجميع روابطك المحفوظة حسب الموضوع أو المشروع أو المزاج. حافظ على كل شيء مرتباً وسهل العثور عليه.\n\nمعاينات غنية للروابط\nيتم عرض كل رابط محفوظ بمعاينة غنية — العنوان والصورة والوصف — حتى تعرف دائماً ما حفظته بنظرة واحدة.\n\nإضافة المشاركة\nاحفظ الروابط من أي تطبيق. استخدم ورقة المشاركة في iOS لإرسال الروابط بسرعة إلى الدلو المختار دون مغادرة التطبيق الحالي.\n\nمزامنة iCloud\nتتم مزامنة دلائك وروابطك بسلاسة عبر جميع أجهزتك عبر iCloud. احفظ رابطاً على iPhone، وجده على Mac.\n\nتصميم نظيف وعصري\nواجهة مركزة مبنية بـ SwiftUI تبقى بعيدة عن طريقك وتتيح لك التركيز على ما يهم — روابطك.\n\nشروط الاستخدام: https:\/\/www.apple.com\/legal\/internet-services\/itunes\/dev\/stdeula\/",
+          "keywords" : "إشارة,حفظ,رابط,لاحقاً,قراءة,قائمة,دلو,تنظيم,جمع,مشاركة,مزامنة,معاينة,ويب,مفضلة",
+          "whatsNew" : "تحديثات وتحسينات طفيفة."
+        }
+      },
+      "locale" : "ar-SA"
+    },
+    {
+      "attributes" : {
+        "appInformation" : {
+          "name" : "Bucket List - Guardar Enlaces",
+          "subtitle" : "Organiza URLs para Después"
+        },
+        "copyright" : "David Ochmann",
+        "screenshots" : {
+          "APP_IPAD_PRO_3GEN_129" : [
+            ".\/Simulator Screenshot - iPad Pro 13-inch (M5) - 2026-04-15 at 08.53.38.png"
+          ],
+          "APP_IPHONE_65" : [
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.18.01.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 09.41.42.png",
+            ".\/Simulator Screenshot - iPhone 14 Plus - 2026-04-15 at 08.17.43.png"
+          ]
+        },
+        "version" : {
+          "description" : "Bucket List es tu forma simple y elegante de guardar URLs para más tarde. Ya sea un artículo que quieres leer, un video para ver o un producto para revisar — solo coloca el enlace en un balde y vuelve cuando estés listo.\n\nCaracterísticas clave:\n\nORGANIZA CON BALDES\nCrea baldes personalizados para agrupar tus enlaces guardados por tema, proyecto o estado de ánimo. Mantén todo ordenado y fácil de encontrar.\n\nVISTAS PREVIAS ENRIQUECIDAS\nCada URL guardada se muestra con una vista previa enriquecida — título, imagen y descripción — para que siempre sepas lo que guardaste de un vistazo.\n\nEXTENSIÓN PARA COMPARTIR\nGuarda enlaces desde cualquier app. Usa la hoja para compartir de iOS para enviar URLs rápidamente al balde elegido sin salir de la app en la que estás.\n\nSINCRONIZACIÓN CON iCLOUD\nTus baldes y enlaces se sincronizan perfectamente en todos tus dispositivos a través de iCloud. Guarda un enlace en tu iPhone, encuéntralo en tu Mac.\n\nDISEÑO LIMPIO Y MODERNO\nUna interfaz enfocada construida con SwiftUI que no estorba y te permite concentrarte en lo que importa — tus enlaces.\n\nTérminos de uso: https:\/\/www.apple.com\/legal\/internet-services\/itunes\/dev\/stdeula\/",
+          "keywords" : "marcador,guardar,url,enlace,después,leer,lista,balde,organizar,colectar,compartir,sync,vista,web",
+          "whatsNew" : "Actualizaciones y mejoras menores."
+        }
+      },
+      "locale" : "es-MX"
+    }
+  ],
+  "id" : "6759563030",
+  "primaryCategory" : "GAMES",
+  "secondaryCategory" : "ENTERTAINMENT",
+  "versionString" : "1.3"
+}
