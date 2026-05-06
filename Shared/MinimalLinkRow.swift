@@ -11,8 +11,7 @@ struct MinimalLinkRow: View {
     let url: URL
     let savedAt: Date
 
-    static let imageHeight: CGFloat = 180
-    static let textBlockHeight: CGFloat = 88
+    static let imageAspectRatio: CGFloat = 16 / 9
 
     @State private var isLoading = true
     @State private var fetchedTitle: String?
@@ -67,11 +66,13 @@ struct MinimalLinkRow: View {
 
     private func loadedView(image: UIImage) -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFill()
-                .frame(maxWidth: .infinity)
-                .frame(height: Self.imageHeight)
+            Color.clear
+                .aspectRatio(Self.imageAspectRatio, contentMode: .fit)
+                .overlay {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()
+                }
                 .clipped()
 
             textBlock
@@ -113,8 +114,7 @@ struct MinimalLinkRow: View {
         VStack(alignment: .leading, spacing: 0) {
             RoundedRectangle(cornerRadius: 0)
                 .fill(Color.secondary.opacity(0.08))
-                .frame(maxWidth: .infinity)
-                .frame(height: Self.imageHeight)
+                .aspectRatio(Self.imageAspectRatio, contentMode: .fit)
 
             VStack(alignment: .leading, spacing: 4) {
                 RoundedRectangle(cornerRadius: 3)
