@@ -9,18 +9,25 @@ import CloudKit
 import SwiftData
 import SwiftUI
 
-struct InboxListView: View {
+struct InboxListView<SuggestionContent: View>: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Bucket.createdAt, order: .reverse) private var buckets: [Bucket]
 
     var onBucketTapped: ((Bucket) -> Void)?
-    var suggestion: BucketSuggestionState?
-    var onSuggestionTapped: ((Bucket) -> Void)?
+    var suggestionContent: SuggestionContent
 
     @State private var showingAddBucket = false
     @State private var newBucketName = ""
     @State private var selectedBucket: Bucket?
     @AppStorage("inboxSortOrder") private var sortOrder: BucketSortOrder = .chronological
+
+    init(
+        onBucketTapped: ((Bucket) -> Void)? = nil,
+        @ViewBuilder suggestionContent: () -> SuggestionContent
+    ) {
+        self.onBucketTapped = onBucketTapped
+        self.suggestionContent = suggestionContent()
+    }
 
     var sortedBuckets: [Bucket] {
         switch sortOrder {
@@ -74,9 +81,11 @@ struct InboxListView: View {
             if let onBucketTapped {
                 List {
                     heroRow
-                    if let suggestion {
-                        suggestedSection(state: suggestion)
-                    }
+                    suggestionContent
+                        .listRowBackground(MinimalDesign.warmBg)
+                        .listRowSeparator(.hidden, edges: .top)
+                        .listRowSeparator(.visible, edges: .bottom)
+                        .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
                     ForEach(sortedBuckets) { bucket in
                         Button {
                             onBucketTapped(bucket)
@@ -163,73 +172,6 @@ struct InboxListView: View {
             .selectionDisabled()
     }
 
-    private func suggestedSection(state: BucketSuggestionState) -> some View {
-        Section {
-            switch state {
-            case .loading:
-                HStack(alignment: .center, spacing: 14) {
-                    ProgressView()
-                        .frame(width: 22, alignment: .center)
-
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text("Suggested")
-                            .font(.system(size: 20, weight: .regular))
-                            .tracking(-0.4)
-                            .foregroundStyle(.primary)
-                            .lineLimit(1)
-                        Text("Analyzing…")
-                            .font(.system(size: 13))
-                            .fontWeight(.light)
-                            .foregroundStyle(.secondary)
-                            .lineLimit(1)
-                    }
-
-                    Spacer()
-                }
-                .padding(.vertical, 14)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            case .loaded(let bucket, let explanation):
-                Button {
-                    onSuggestionTapped?(bucket)
-                } label: {
-                    let tint = MinimalDesign.resolvedTint(for: bucket.name, customIndex: bucket.customColorIndex)
-                    let symbol = MinimalDesign.resolvedSymbol(for: bucket.name, customIndex: bucket.customSymbolIndex)
-                    HStack(alignment: .center, spacing: 14) {
-                        Image(systemName: symbol)
-                            .font(.system(size: 18, weight: .regular))
-                            .foregroundStyle(tint)
-                            .frame(width: 22, alignment: .center)
-
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text(bucket.name)
-                                .font(.system(size: 20, weight: .regular))
-                                .tracking(-0.4)
-                                .foregroundStyle(.primary)
-                                .lineLimit(1)
-                            Text("Suggested")
-                                .font(.system(size: 13))
-                                .fontWeight(.light)
-                                .foregroundStyle(.secondary)
-                                .lineLimit(1)
-                        }
-                    }
-                    .padding(.vertical, 14)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .contentShape(Rectangle())
-                }
-                .buttonStyle(.plain)
-
-            case .failed:
-                EmptyView()
-            }
-        }
-        .listRowBackground(MinimalDesign.warmBg)
-        .listRowSeparator(.hidden, edges: .top)
-        .listRowSeparator(.visible, edges: .bottom)
-        .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-    }
-
     private func bucketRow(_ bucket: Bucket) -> some View {
         let tint = MinimalDesign.resolvedTint(for: bucket.name, customIndex: bucket.customColorIndex)
         let symbol = MinimalDesign.resolvedSymbol(for: bucket.name, customIndex: bucket.customSymbolIndex)
@@ -293,6 +235,14 @@ struct InboxListView: View {
     }
 }
 
+extension InboxListView where SuggestionContent == EmptyView {
+    init(onBucketTapped: ((Bucket) -> Void)? = nil) {
+        self.init(onBucketTapped: onBucketTapped) {
+            EmptyView()
+        }
+    }
+}
+
 #if DEBUG
 #Preview("App") {
     InboxListView()
@@ -301,7 +251,9 @@ struct InboxListView: View {
 
 #Preview("Share Extension") {
     NavigationStack {
-        InboxListView(onBucketTapped: { _ in })
+        InboxListView(onBucketTapped: { _ in }) {
+            EmptyView()
+        }
     }
     .modelContainer(PreviewSampleData.container)
 }

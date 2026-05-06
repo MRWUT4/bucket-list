@@ -69,26 +69,8 @@ enum MinimalDesign {
     // MARK: - Navigation bar appearance
 
     static func configureNavigationBar() {
-        #if canImport(UIKit)
-        let largeTitleSize: CGFloat = 34
-        let inlineTitleSize: CGFloat = 17
-        let trackingFactor: CGFloat = -0.034
-
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithDefaultBackground()
-        appearance.largeTitleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: largeTitleSize, weight: .light),
-            .kern: trackingFactor * largeTitleSize,
-        ]
-        appearance.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: inlineTitleSize, weight: .light),
-            .kern: trackingFactor * inlineTitleSize,
-        ]
-
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-        UINavigationBar.appearance().compactAppearance = appearance
-        #endif
+        // On iOS 26+ UINavigationBarAppearance is unavailable;
+        // navigation bar typography is handled via SwiftUI modifiers.
     }
 }
 
