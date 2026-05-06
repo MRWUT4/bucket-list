@@ -24,49 +24,32 @@ struct BucketPickerView: View {
     let content: SharedContent
     let onDismiss: () -> Void
 
-    @State private var isAutoSorting = false
-    @State private var autoSortMessage = ""
-    @State private var showAutoSortResult = false
+    @State private var suggestionState: BucketSuggestionState = .loading
     private let container = SharedModelContainer.extensionContainer
 
     var body: some View {
         NavigationStack {
-            ZStack(alignment: .bottomTrailing) {
-                InboxListView(onBucketTapped: { bucket in
+            InboxListView(
+                onBucketTapped: { bucket in
                     saveItem(to: bucket)
                     onDismiss()
-                })
-
-                FloatingActionButton(systemImage: "sparkles") {
-                    autoSortItem()
+                },
+                suggestion: suggestionState,
+                onSuggestionTapped: { bucket in
+                    saveItem(to: bucket)
+                    onDismiss()
                 }
-                .disabled(isAutoSorting)
-                .padding()
-            }
-            .navigationBarTitleDisplayMode(.inline)
+            )
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { onDismiss() }
                 }
             }
-            .alert("Auto-Sorted", isPresented: $showAutoSortResult) {
-                Button("OK") { onDismiss() }
-            } message: {
-                Text(autoSortMessage)
-            }
-            .overlay {
-                if isAutoSorting {
-                    ZStack {
-                        Color.black.opacity(0.3)
-                            .ignoresSafeArea()
-                        ProgressView("Analyzing…")
-                            .padding()
-                            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
-                    }
-                }
-            }
         }
         .modelContainer(container)
+        .task {
+            await computeSuggestion()
+        }
     }
 
     // MARK: - Data Operations
@@ -87,12 +70,13 @@ struct BucketPickerView: View {
 
     // MARK: - Auto-Sort
 
-    private func autoSortItem() {
+    private func computeSuggestion() async {
+        suggestionState = .loading
         switch content {
         case .url(let url):
-            autoSortURL(url)
+            await computeURLSuggestion(url)
         case .image:
-            autoSortImage()
+            computeImageSuggestion()
         }
     }
 
@@ -102,28 +86,22 @@ struct BucketPickerView: View {
         return (try? context.fetch(descriptor)) ?? []
     }
 
-    private func autoSortURL(_ url: URL) {
-        isAutoSorting = true
-        Task {
-            let provider = LPMetadataProvider()
-            let metadata = try? await provider.startFetchingMetadata(for: url)
+    private func computeURLSuggestion(_ url: URL) async {
+        let provider = LPMetadataProvider()
+        let metadata = try? await provider.startFetchingMetadata(for: url)
 
-            if SystemLanguageModel.default.isAvailable {
-                do {
-                    try await smartSort(url: url, metadata: metadata)
-                } catch {
-                    domainMatchFallback(url: url, metadata: metadata)
-                }
-            } else {
-                domainMatchFallback(url: url, metadata: metadata)
+        if SystemLanguageModel.default.isAvailable {
+            do {
+                try await smartSuggest(url: url, metadata: metadata)
+            } catch {
+                domainMatchSuggestion(url: url, metadata: metadata)
             }
-
-            isAutoSorting = false
-            showAutoSortResult = true
+        } else {
+            domainMatchSuggestion(url: url, metadata: metadata)
         }
     }
 
-    private func smartSort(url: URL, metadata: LPLinkMetadata?) async throws {
+    private func smartSuggest(url: URL, metadata: LPLinkMetadata?) async throws {
         let buckets = fetchBuckets()
         let instructions = """
             You are a smart organizer that categorizes web links into topic buckets.
@@ -137,14 +115,13 @@ struct BucketPickerView: View {
 
         if suggestion.isExistingBucket,
            let bucket = buckets.first(where: { $0.name == suggestion.bucketName }) {
-            saveItem(to: bucket)
+            suggestionState = .loaded(bucket: bucket, explanation: suggestion.explanation)
         } else {
             let context = container.mainContext
             let bucket = Bucket(name: suggestion.bucketName)
             context.insert(bucket)
-            saveItem(to: bucket)
+            suggestionState = .loaded(bucket: bucket, explanation: suggestion.explanation)
         }
-        autoSortMessage = suggestion.explanation
     }
 
     private func buildSortPrompt(url: URL, metadata: LPLinkMetadata?, buckets: [Bucket]) -> String {
@@ -180,37 +157,31 @@ struct BucketPickerView: View {
 
     // MARK: - Fallbacks
 
-    private func domainMatchFallback(url: URL, metadata: LPLinkMetadata?) {
+    private func domainMatchSuggestion(url: URL, metadata: LPLinkMetadata?) {
         let buckets = fetchBuckets()
         let domain = url.host ?? url.absoluteString
-        let siteTitle = metadata?.title
 
         if let matchingBucket = findBestMatchingBucket(for: url, in: buckets) {
-            saveItem(to: matchingBucket)
-            autoSortMessage = "Saved to \"\(matchingBucket.name)\" — this link matches other items from \(domain)."
+            suggestionState = .loaded(bucket: matchingBucket, explanation: "Matches other items from \(domain)")
         } else {
-            let bucketName = siteTitle ?? domain
+            let bucketName = metadata?.title ?? domain
             let context = container.mainContext
             let bucket = Bucket(name: bucketName)
             context.insert(bucket)
-            saveItem(to: bucket)
-            autoSortMessage = "Created new bucket \"\(bucketName)\" for links from \(domain)."
+            suggestionState = .loaded(bucket: bucket, explanation: "New bucket for links from \(domain)")
         }
     }
 
-    private func autoSortImage() {
+    private func computeImageSuggestion() {
         let buckets = fetchBuckets()
         if let bucket = buckets.first(where: { ($0.items ?? []).contains { $0.isImage } }) {
-            saveItem(to: bucket)
-            autoSortMessage = "Saved image to \"\(bucket.name)\" — this bucket already contains images."
+            suggestionState = .loaded(bucket: bucket, explanation: "This bucket already contains images")
         } else {
             let context = container.mainContext
             let bucket = Bucket(name: "Images")
             context.insert(bucket)
-            saveItem(to: bucket)
-            autoSortMessage = "Created new bucket \"Images\" for your saved images."
+            suggestionState = .loaded(bucket: bucket, explanation: "New bucket for your saved images")
         }
-        showAutoSortResult = true
     }
 
     private func findBestMatchingBucket(for url: URL, in buckets: [Bucket]) -> Bucket? {

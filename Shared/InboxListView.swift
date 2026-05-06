@@ -14,6 +14,8 @@ struct InboxListView: View {
     @Query(sort: \Bucket.createdAt, order: .reverse) private var buckets: [Bucket]
 
     var onBucketTapped: ((Bucket) -> Void)?
+    var suggestion: BucketSuggestionState?
+    var onSuggestionTapped: ((Bucket) -> Void)?
 
     @State private var showingAddBucket = false
     @State private var newBucketName = ""
@@ -42,7 +44,6 @@ struct InboxListView: View {
     }
 
     private var heroMeta: String? {
-        guard onBucketTapped == nil else { return nil }
         let bucketCount = buckets.count
         return "\(bucketCount) \(bucketCount == 1 ? "bucket" : "buckets") · \(totalLinks) \(totalLinks == 1 ? "link" : "links")"
     }
@@ -73,6 +74,9 @@ struct InboxListView: View {
             if let onBucketTapped {
                 List {
                     heroRow
+                    if let suggestion {
+                        suggestedSection(state: suggestion)
+                    }
                     ForEach(sortedBuckets) { bucket in
                         Button {
                             onBucketTapped(bucket)
@@ -157,6 +161,73 @@ struct InboxListView: View {
             .listRowSeparator(.hidden)
 //            .listRowInsets(EdgeInsets(top: -32, leading: -8, bottom: 0, trailing: 0))
             .selectionDisabled()
+    }
+
+    private func suggestedSection(state: BucketSuggestionState) -> some View {
+        Section {
+            switch state {
+            case .loading:
+                HStack(alignment: .center, spacing: 14) {
+                    ProgressView()
+                        .frame(width: 22, alignment: .center)
+
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text("Suggested")
+                            .font(.system(size: 20, weight: .regular))
+                            .tracking(-0.4)
+                            .foregroundStyle(.primary)
+                            .lineLimit(1)
+                        Text("Analyzing…")
+                            .font(.system(size: 13))
+                            .fontWeight(.light)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                    }
+
+                    Spacer()
+                }
+                .padding(.vertical, 14)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            case .loaded(let bucket, let explanation):
+                Button {
+                    onSuggestionTapped?(bucket)
+                } label: {
+                    let tint = MinimalDesign.resolvedTint(for: bucket.name, customIndex: bucket.customColorIndex)
+                    let symbol = MinimalDesign.resolvedSymbol(for: bucket.name, customIndex: bucket.customSymbolIndex)
+                    HStack(alignment: .center, spacing: 14) {
+                        Image(systemName: symbol)
+                            .font(.system(size: 18, weight: .regular))
+                            .foregroundStyle(tint)
+                            .frame(width: 22, alignment: .center)
+
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text(bucket.name)
+                                .font(.system(size: 20, weight: .regular))
+                                .tracking(-0.4)
+                                .foregroundStyle(.primary)
+                                .lineLimit(1)
+                            Text("Suggested")
+                                .font(.system(size: 13))
+                                .fontWeight(.light)
+                                .foregroundStyle(.secondary)
+                                .lineLimit(1)
+                        }
+                    }
+                    .padding(.vertical, 14)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+
+            case .failed:
+                EmptyView()
+            }
+        }
+        .listRowBackground(MinimalDesign.warmBg)
+        .listRowSeparator(.hidden, edges: .top)
+        .listRowSeparator(.visible, edges: .bottom)
+        .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
     }
 
     private func bucketRow(_ bucket: Bucket) -> some View {

@@ -43,6 +43,7 @@ enum BucketSortOrder: String, CaseIterable {
 struct BucketListView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.openURL) private var openURL
+    @Query(sort: \Bucket.createdAt, order: .reverse) private var allBuckets: [Bucket]
     let bucket: Bucket
 
     @State private var showingAddURL = false
@@ -51,6 +52,7 @@ struct BucketListView: View {
     @State private var newName = ""
     @State private var selectedImageData: Data?
     @State private var shareItem: BucketItem?
+    @State private var moveItem: BucketItem?
     @AppStorage("bucketSortOrder") private var sortOrder: BucketSortOrder = .chronological
     @State private var filter: BucketFilter = .all
 
@@ -113,6 +115,13 @@ struct BucketListView: View {
                         Label("Share", systemImage: "square.and.arrow.up")
                     }
                     .tint(.blue)
+
+                    Button {
+                        moveItem = item
+                    } label: {
+                        Label("Move", systemImage: "folder")
+                    }
+                    .tint(.orange)
                 }
             }
             .onDelete(perform: deleteItems)
@@ -192,6 +201,20 @@ struct BucketListView: View {
         )) {
             if let item = shareItem {
                 ActivityView(item: item)
+            }
+        }
+        .sheet(isPresented: Binding(
+            get: { moveItem != nil },
+            set: { if !$0 { moveItem = nil } }
+        )) {
+            if let item = moveItem {
+                MoveToBucketSheet(
+                    item: item,
+                    buckets: allBuckets.filter { $0.persistentModelID != bucket.persistentModelID }
+                ) { destination in
+                    item.bucket = destination
+                    moveItem = nil
+                }
             }
         }
     }
